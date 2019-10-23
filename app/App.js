@@ -128,7 +128,7 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   canvas: { position: "absolute", top: 0, right: 0, left: 0, bottom: 0 },
-  button: { paddingVertical: 10, paddingHorizontal: 15, backgroundColor: "white" },
+  button: { paddingVertical: 10, paddingHorizontal: 25, backgroundColor: "white" },
   buttonLabel: { color: chroma.hsl(0, 1, 0.6).hex(), fontSize: 20 },
   row: { flexDirection: "row" },
   text: { margin: 10 }
