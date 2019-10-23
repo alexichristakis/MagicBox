@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, View, Text, Button, StatusBar } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, StatusBar } from "react-native";
 
 import chroma from "chroma-js";
 import dgram from "react-native-udp";
@@ -12,9 +12,8 @@ const FORCE = 2;
 class App extends React.Component {
   state = {
     connected: false,
-    debugMode: false,
     sensorMins: [0, 0, 0],
-    sensorMaxes: [0, 0, 0],
+    sensorMaxes: [1, 1, 1],
     sensors: [0, 0, 0]
   };
 
@@ -96,23 +95,30 @@ class App extends React.Component {
 
   render() {
     const { connected, sensors } = this.state;
+
     return (
       <>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar hidden={true} />
         <SafeAreaView style={[styles.container, { backgroundColor: this.getBackgroundColor() }]}>
           <SketchCanvas
             style={styles.canvas}
             strokeWidth={this.getStrokeWidth()}
             strokeColor={this.getStrokeColor()}
           />
-          {!connected && <Button onPress={this.connect} title="connect" />}
-          <View style={styles.row}>
-            {sensors.map((val, i) => (
-              <Text style={styles.text} key={i}>
-                {val}
-              </Text>
-            ))}
-          </View>
+          {!connected && (
+            <TouchableOpacity style={styles.button} onPress={this.connect}>
+              <Text style={styles.buttonLabel}>connect</Text>
+            </TouchableOpacity>
+          )}
+          {__DEV__ && (
+            <View style={styles.row}>
+              {sensors.map((val, i) => (
+                <Text style={styles.text} key={i}>
+                  {val}
+                </Text>
+              ))}
+            </View>
+          )}
         </SafeAreaView>
       </>
     );
@@ -122,6 +128,8 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   canvas: { position: "absolute", top: 0, right: 0, left: 0, bottom: 0 },
+  button: { paddingVertical: 10, paddingHorizontal: 15, backgroundColor: "white" },
+  buttonLabel: { color: chroma.hsl(0, 1, 0.6).hex(), fontSize: 20 },
   row: { flexDirection: "row" },
   text: { margin: 10 }
 });
