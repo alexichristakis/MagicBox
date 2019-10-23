@@ -15,7 +15,3 @@ On the software side, the ESP32 receives analog input from each of these sensors
 ![Open Box](assets/open_box.HEIC)
 
 ![Construction](assets/construction.HEIC)
-
-
-
-
