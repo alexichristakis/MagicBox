@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, StatusBar } fro
 
 import chroma from "chroma-js";
 import dgram from "react-native-udp";
+import { TextDecoder } from "text-encoding";
 import { SketchCanvas } from "@terrylinla/react-native-sketch-canvas";
 
 const LIGHT = 0;
@@ -28,11 +29,11 @@ class App extends React.Component {
     socket.on("message", (data, rinfo) => {
       const message = new TextDecoder("utf-8").decode(data);
 
-      const { sensorMins, sensorMaxes } = this.state;
+      const { sensors, sensorMins, sensorMaxes } = this.state;
 
       const newSensorMins = [...sensorMins];
       const newSensorMaxes = [...sensorMaxes];
-      const sensors = message.split(",").map((v, i) => {
+      const newSensors = message.split(",").map((v, i) => {
         const val = +v;
 
         if (val > sensorMaxes[i]) {
@@ -41,9 +42,14 @@ class App extends React.Component {
           newSensorMins[i] = val;
         }
 
-        return val;
+        return (val + sensors[i]) / 2;
       });
-      this.setState({ sensors, sensorMins: newSensorMins, sensorMaxes: newSensorMaxes });
+
+      this.setState({
+        sensors: newSensors,
+        sensorMins: newSensorMins,
+        sensorMaxes: newSensorMaxes
+      });
     });
   };
 
@@ -78,7 +84,7 @@ class App extends React.Component {
     const { sensors } = this.state;
 
     const val = sensors[PIEZO];
-    const calibrated = this.calibrate(val, LIGHT, [1, 10]);
+    const calibrated = this.calibrate(val, LIGHT, [1, 100]);
 
     return calibrated;
   };
