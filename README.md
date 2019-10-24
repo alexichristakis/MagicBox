@@ -6,12 +6,14 @@ The MagicBox is a wireless system that communicates to a React Native app via UD
 
 ![Closed Box](assets/closed_box.HEIC)
 
+![Open Box](assets/open_box.HEIC)
+
 On the software side, the ESP32 receives analog input from each of these sensors, and with power from a 600mah LiPo battery transmits them over a WiFi network. The React Native app (when connected to the MagicBox network) provides the user with a sketch pad. Each of the box's sensors is mapped to a parameter of the drawing: the background color, the stroke weight of the pen, and the stroke color.
+
+The slow decay of the piezoelectric sensor adds a fun and engaging effect to the stroke width, where a hard tap to the box yields a stroke width that gradually scales from heavy to light.
 
 ### Wiring diagram for the MagicBox
 
 ![Wiring Diagram](assets/wiring_diagram.png)
-
-![Open Box](assets/open_box.HEIC)
 
 ![Construction](assets/construction.HEIC)
